@@ -7,7 +7,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "@project-serum/anchor": "0.18",
+    "@project-serum/anchor": "0.22.1",
     "@rollup/plugin-inject": "^4.0.3",
     "@solana/buffer-layout": "^4.0.0",
     "buffer": "^6.0.3",

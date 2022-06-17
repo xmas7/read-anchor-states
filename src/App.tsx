@@ -1,7 +1,7 @@
 import { Keypair } from "@solana/web3.js";
 import React, { ReactEventHandler, useEffect, useMemo, useState } from "react";
 
-import { CyclosCore, IDL } from "./cyclos-core";
+import { Betting, IDL } from "./idl";
 
 import * as anchor from "@project-serum/anchor";
 import { Body } from "./Body";
@@ -12,7 +12,8 @@ function App() {
   const wallet = new anchor.Wallet(Keypair.generate());
   const connection = new anchor.web3.Connection(
     // "https://api.mainnet-beta.solana.com",
-    "https://ssc-dao.genesysgo.net",
+    // "https://ssc-dao.genesysgo.net",
+    "https://api.devnet.solana.com",
     {
       commitment: "processed",
     }
@@ -22,9 +23,9 @@ function App() {
     skipPreflight: false,
   });
 
-  const cyclosCore = new anchor.Program<CyclosCore>(
+  const betting = new anchor.Program<Betting>(
     IDL,
-    "cysPXAjehMpVKUapzbMCCnpFxUFFryEWEaLgnb9NrR8",
+    "FqwBEMn1LsPqkFJoAwBGvQutDGbZuU1TRrhTioPiXLQg",
     provider
   );
 
@@ -36,11 +37,15 @@ function App() {
   useEffect(() => {
     async function fetchStates() {
       const index = IDL.accounts.findIndex((a) => a.name == selectedState);
-
+      console.log("index =", index);
+      
+      console.log("selectedState =", selectedState);
+      console.log("IDL.accounts =", IDL.accounts);
+      console.log("IDL.accounts[index] =", IDL.accounts[index]);
       const accClient = new anchor.AccountClient(
         IDL,
         IDL.accounts[index],
-        cyclosCore.programId,
+        betting.programId,
         provider
       );
 
@@ -59,7 +64,7 @@ function App() {
   }, [selectedState]);
 
   const userSelectState = (e: any) => {
-    setSelectedState(e.target.nodeValue);
+    setSelectedState(e.target.value);
   };
 
   return (

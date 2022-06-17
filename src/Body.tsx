@@ -1,4 +1,4 @@
-import { IDL } from "./cyclos-core";
+import { IDL } from "./idl";
 
 export const Body = ({ userSelectState, states, selectedState }: any) => {
   const accountTypes = IDL.accounts.map((acc) => acc.name);
